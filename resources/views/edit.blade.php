@@ -21,11 +21,12 @@
                         <input value ="{{ old('name', $post->name)}}" type="text" class="form-control" name="name" placeholder="Enter Name" ><br>
                         <textarea name="description" class="form-control" placeholder="Enter Description">{{old('description',$post->description)}}</textarea>    
                     </div>
+                    <br>
                     <div class="form-group">
-                            <select name="category_id" class="form-group">
-                                <option value="">selected</option>
+                            <select name="category_id" class="form-control">
+                                <option value="" class="form-control">selected</option>
                                @foreach($category as $cat)
-                               <option value="{{$cat->id}}" {{$cat->id==$post->category_id ?'selected':""}}>{{$cat->name}}</option>
+                               <option value="{{$cat->id}}" class="form-control" {{$cat->id==$post->category_id ?'selected':""}}>{{$cat->name}}</option>
                                @endforeach
                             </select>
                         </div>

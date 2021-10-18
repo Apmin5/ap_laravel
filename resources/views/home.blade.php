@@ -10,7 +10,14 @@
 
         
         <br>
-        
+        <div>
+            @if (session('status'))
+                <div class="alert alert-success alert-dismissible">
+                    <strong>Success!</strong>{{ session('status') }}
+                    <a href="#" class="close" data-dismiss="alert" aria-lable="close">&times;</a>
+                </div>
+            @endif
+        </div>
         <div class="card">
                     <h5 class="card-header" style = "text-align:center">Content</h5>
                     <div class="card-body">

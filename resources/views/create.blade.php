@@ -28,7 +28,7 @@
                         @enderror -->
                         <br>
                         <div class="form-group">
-                            <select name="category_id" class="form-group">
+                            <select name="category_id" class="form-control">
                                 <option value=""  class="form-group">selected</option>
                                @foreach($category as $cat)
                                <option value="{{$cat->id}}"  class="form-group">{{$cat->name}}</option>

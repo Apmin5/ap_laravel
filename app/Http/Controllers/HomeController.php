@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Mail\PostStored;
 use App\Models\Category;
+use App\Mail\postCreated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\storePostRequest;
 
 class HomeController extends Controller
@@ -46,8 +50,9 @@ class HomeController extends Controller
         // $post->description = $request->description;
         // $post->save();
         $validated = $request->validated();
-        Post::create($validated);
-        return redirect('/posts');
+        $post = Post::create($validated + ['user_id'=>Auth::user()->id]);
+        // Mail::to('aung@gmail.com')->send(new PostStored($post));
+        return redirect('/posts')->with('status','New post.');
     }
 
     /**
@@ -61,6 +66,10 @@ class HomeController extends Controller
     //    if($post->user_id != auth()->id()){
     //        abort(403);
     //    }
+        // Mail::raw('Hello World',function($msg){
+        //     $msg->to('aung@gmail.com')->subject('Ap index function.');
+        // });
+        Mail::to('aung@gmail.com')->send(new postCreated());
         $this->authorize('view',$post);
         return view('show',compact('post'));
     }
@@ -101,7 +110,7 @@ class HomeController extends Controller
 
         $validated = $request->validated();
         $post->update($validated);
-        return redirect('/posts');
+        return redirect('/posts')->with('status','Edit post.');
 
     }
 
@@ -114,7 +123,7 @@ class HomeController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect('/posts');
+        return redirect('/posts')->with('status','delete post.');
 
     }
 }
